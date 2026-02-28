@@ -1,0 +1,14 @@
+.singlecardDes {
+    margin-left: 20%;
+    border: 2px;
+    padding: 1% 4%;
+    border-radius: 5px;
+    background-color: antiquewhite;
+    box-shadow: 10px 10px rgb(242, 223, 223);
+}
+
+.singlecardHead {
+    font-weight: bold;
+    font-size: larger;
+    margin-top: 20px;
+}
