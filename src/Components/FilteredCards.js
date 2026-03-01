@@ -1,13 +1,45 @@
 import tourdata from "../Utils/tourdata";
+import { useContext, useState, useEffect } from "react";
+import SeasonToursContext from "./SeasonToursContext";
 import { useParams } from "react-router";
+import { Link } from "react-router";
 
 export default function FilteredCards() {
 
+    const {summertours, wintertours, springTours} = useContext(SeasonToursContext);
     const {type} = useParams();
     console.log(type);
-    const filteredData = tourdata.filter(item => {
-        return (item.city && item.city.toLowerCase() === type.toLowerCase()) || (item.type && item.type.toLowerCase() === type.toLowerCase());});
+    const [loading, setLoading] = useState(true);
 
+  let filteredData = [];
+
+  const typeLower = type.toLowerCase();
+
+  if (typeLower === "winter") {
+    filteredData = wintertours;
+  } else if (typeLower === "summer") {
+    filteredData = summertours;
+  } else if (typeLower === "spring") {
+    filteredData = springTours;
+  } 
+
+    else { filteredData = tourdata.filter(item => {
+        return (item.city && item.city.toLowerCase() === type.toLowerCase()) || (item.type && item.type.toLowerCase() === type.toLowerCase());}); }
+
+    useEffect(() => {
+    // If data is already available, stop loading immediately
+      if (filteredData.length > 0) {setLoading(false); return;}
+    // Otherwise, set a 1-minute timer
+      const timer = setTimeout(() => {setLoading(false);}, 60000);
+    // Cleanup timer
+      return () => clearTimeout(timer);
+    }, [filteredData]);
+
+    if (loading) {
+      return (
+      <div><h2 className="text-4xl">Loading tours for {type}...</h2></div>
+    );
+  }
 
     const stars = [];
     for (let i = 0; i < 5; i++) {
@@ -30,6 +62,7 @@ export default function FilteredCards() {
                 </div>
                 <div className="flex flex-wrap gap-4 mt-6 mx-[9%] w-[100vw]">
                 {filteredData.map(item => (
+                    <Link to={"/detail/"+item.id} key={item.id}>
                     <div key={item.id} className="homerating w-75 bg-white">
                     <img src={item.image} className="h-48 w-full rounded-t-2xl"/>
                     <h2 className="homeratingcontent py-2 text-[#146e13] font-bold text-lg">{item.description}</h2>
@@ -40,12 +73,13 @@ export default function FilteredCards() {
                     <p className="homeratingcontent"><img src="https://troll.is/assets/svg/difficulty.svg"></img><span className="homeratingtext">{"Service Before: "+item.end_time+":00"}</span></p>
                     <p className="homeratingcontent py-2"><span className="homeratingtext">From  </span><span className="text-[#161b19] font-semibold text-2xl">{"$"+item.price}</span><span className="homeratingtext">/traveller</span></p>
                     </div>
+                    </Link>
                 ))}
                 </div>
                 </div>
             ) : (
                 <div>
-                <p>No tours available for {params[0]}</p>
+                <p>No tours available for {type}</p>
                 <p>Don't Worry, </p>
                 <p>We have many tours available for you. Just Explore it on your own once.</p>
                 <button>Discover Tours →</button>

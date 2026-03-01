@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router";
 import HomeheaderImage from "../Utils/HomeheaderImage";
 
 function HomeHeader() {
@@ -22,7 +23,7 @@ function HomeHeader() {
     <div id="homeheadcontent">
       <h1 className="text-5xl font-bold mb-8 border-b-white text-shadow-white">{HomeheaderImage[currentIndex].head}</h1>
       <p className="text-xl mb-8 leading-relaxed border-b-white text-shadow-white">{HomeheaderImage[currentIndex].description}</p>
-      <button className="bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg w-fit text-lg transition">Discover Tours →</button>
+      <Link to="/allCards/"><button className="cursor-pointer bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg w-fit text-lg transition">Discover Tours →</button></Link>
     </div>
 
     <div className="absolute top-[84%] w-[90%] left-30 flex gap-[5%] z-20">

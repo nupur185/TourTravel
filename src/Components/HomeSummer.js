@@ -1,7 +1,10 @@
 import { Link } from "react-router"
+import SeasonToursContext from "./SeasonToursContext";
+import { useContext } from "react";
 
-export default function HomeWinter({summertours}) {
+export default function HomeWinter() {
 
+    const {summertours} = useContext(SeasonToursContext);
     const shuffledTours = ([...summertours].sort(() => Math.random() - 0.5)).slice(0,8);   //(0 to 1) - 0.5 is always b/w (-0.5 to 0.5) means, sometimes -ve, sometimes +ve leading to sometimes a comes first, sometimes b.
 
     const stars = [];
