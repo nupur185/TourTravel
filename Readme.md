@@ -11,16 +11,16 @@ This website is designed to make trip planning easier and more personalized. Whe
 ---
 
 ## 🚀 Features
-###  🧭 Tour Recommendations
+###  Tour Recommendations
 - Get suitable travel options instead of randomly choosing places.
-### 🏞️ Tour Guide for Each Destination
+###  Tour Guide for Each Destination
 - Guide details  
 - Pricing  
 
 ### 🔍 Filter & Sort Options
 - Users can filter and sort tours according to their needs and preferences.
 
-### 📦 Booking System
+###  Booking System
 - You can book tours easily.  
 - Bookings are stored using **localStorage** (so they don’t disappear on refresh).
 
@@ -32,17 +32,17 @@ This website is designed to make trip planning easier and more personalized. Whe
   - and more
 - Get better recommendations.
 
-### 🌦️ Season-Based Categories
+###  Season-Based Categories
 - Tours are categorized into:
   - Summer  
   - Winter  
   - Spring  
 - Uses Weather API.
 
-### 📱 Responsive Design
+###  Responsive Design
 - Works properly on mobile, tablet, and desktop screens.
 
-### 🎨 Clean UI/UX
+###  Clean UI/UX
 - Simple interface, easy navigation, no unnecessary complexity.
 
 ---
@@ -67,7 +67,7 @@ https://tourtravl.netlify.app/
 ## ⚙️ Installation
 
 ```bash
-git clone <your-repo-link>
+git clone https://github.com/nupur185/TourTravel
 cd tourtravel
 npm install
 npm start
