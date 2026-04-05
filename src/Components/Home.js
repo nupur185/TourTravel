@@ -1,12 +1,11 @@
 import Homecontent from "./Homecontent"
 import HomeHeader from "./HomeHeader"
-import HomeFooter from "./HomeFooter"
 
 export default function Home () {
     return (
-        <>
+        <div className="overflow-x-hidden">
         <HomeHeader/>
         <Homecontent/>
-        </>
+        </div>
     )
 }

@@ -7,10 +7,10 @@ function HomeHeader() {
 
   // Auto Slide
   useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentIndex((prev) => prev === HomeheaderImage.length - 1 ? 0 : prev + 1);
+    setInterval(() => {
+      setCurrentIndex((prev) => (prev+1)%(HomeheaderImage.length));
     }, 2000);
-    return () => clearInterval(interval);
+    // return () => clearInterval(interval);
   }, []);
 
   return (
@@ -21,12 +21,12 @@ function HomeHeader() {
      <div id="homeheader"/>
 
     <div id="homeheadcontent">
-      <h1 className="text-5xl font-bold mb-8 border-b-white text-shadow-white">{HomeheaderImage[currentIndex].head}</h1>
-      <p className="text-xl mb-8 leading-relaxed border-b-white text-shadow-white">{HomeheaderImage[currentIndex].description}</p>
-      <Link to="/allCards/"><button className="cursor-pointer bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg w-fit text-lg transition">Discover Tours →</button></Link>
+      <h1 className="text-5xl font-bold mb-8 border-b-white text-shadow-white descriptionh">{HomeheaderImage[currentIndex].head}</h1>
+      <p className="text-xl mb-8 leading-relaxed border-b-white text-shadow-white descriptiont">{HomeheaderImage[currentIndex].description}</p>
+      <Link to="/allCards/"><button className="buttonclick cursor-pointer bg-green-500 hover:bg-green-600 px-6 py-3 rounded-lg w-fit text-lg transition">Discover Tours →</button></Link>
     </div>
 
-    <div className="absolute top-[84%] w-[90%] left-30 flex gap-[5%] z-20">
+    <div className="absolute top-[84%] w-[90%] left-30 flex gap-[5%] z-20 glass">
 
         <div className="glass-inner">
         <h2 className="text-xl font-bold">Tripadvisor Travelers' Choice</h2>

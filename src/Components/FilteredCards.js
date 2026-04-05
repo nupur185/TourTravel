@@ -29,9 +29,9 @@ export default function FilteredCards() {
     useEffect(() => {
     // If data is already available, stop loading immediately
       if (filteredData.length > 0) {setLoading(false); return;}
-    // Otherwise, set a 1-minute timer
+    // Otherwise set timer 1min
       const timer = setTimeout(() => {setLoading(false);}, 60000);
-    // Cleanup timer
+    // Clean timer
       return () => clearTimeout(timer);
     }, [filteredData]);
 
@@ -50,20 +50,19 @@ export default function FilteredCards() {
             {filteredData.length > 0 ? (
                 <div>
                 <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQ1V7sdr7lpiT4akEqgKILxixXHedzimsIYxg&s" className="block mx-auto w-[60vw] h-120"></img>
-                <div className="bg-[#dcfce7] flex flex-wrap px-[10%] py-4 mx-40 my-3 rounded-xl justify-between">
+                <div className="bg-[#dcfce7] flex flex-wrap px-[10%] py-4 mx-40 my-3 rounded-xl justify-between terms-box">
                 <p>🔒 Fast and Secure Payments</p>
                 <p>🏷️ Best Price Guarantee</p>
                 <p>↪️ 24 hrs Cancellation Policy</p>
                 <p>🕵 Professional Guide</p>
                 </div> 
                 <div className="flex">
-                    <p className="w-[50%] mx-[10%]">The easiest and most efficient way to plan your adventure is by choosing one of our designed multi day tours. At Troll we offer packages that include the expertise of guides, exciting activities, comfortable accommodations and delicious breakfasts. Throughout your journey you'll be joined by a group of adventurers and led by our knowledgeable guide who will ensure you create unforgettable memories while gaining a deeper understanding of Icelandic culture.</p>
-                    <div>Sort By </div>
+                    <p className="mx-[10%]">The easiest and most efficient way to plan your adventure is by choosing one of our designed multi day tours. At Troll we offer packages that include the expertise of guides, exciting activities, comfortable accommodations and delicious breakfasts. Throughout your journey you'll be joined by a group of adventurers and led by our knowledgeable guide who will ensure you create unforgettable memories while gaining a deeper understanding of Icelandic culture.</p>
                 </div>
                 <div className="flex flex-wrap gap-4 mt-6 mx-[9%] w-[100vw]">
                 {filteredData.map(item => (
                     <Link to={"/detail/"+item.id} key={item.id}>
-                    <div key={item.id} className="homerating w-75 bg-white">
+                    <div key={item.id} className="homerating w-75 bg-white buttonclick">
                     <img src={item.image} className="h-48 w-full rounded-t-2xl"/>
                     <h2 className="homeratingcontent py-2 text-[#146e13] font-bold text-lg">{item.description}</h2>
                     <h4 className="homeratingcontent">{stars}<span className="ml-2 homeratingtext">{item.ratings + ".0"}</span></h4>
@@ -79,7 +78,7 @@ export default function FilteredCards() {
                 </div>
             ) : (
                 <div>
-                <p>No tours available for {type}</p>
+                <p>No tours available of {type}</p>
                 <p>Don't Worry, </p>
                 <p>We have many tours available for you. Just Explore it on your own once.</p>
                 <button>Discover Tours →</button>

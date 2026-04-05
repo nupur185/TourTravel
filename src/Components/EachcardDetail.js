@@ -1,7 +1,8 @@
 import './singleCard.css';
-import { useEffect , useState} from 'react';
+import { useEffect , useState, useContext} from 'react';
 import { useParams } from "react-router";
 import tourdata from "../Utils/tourdata";
+import BookingContext from './BookingContext';
 
 export default function EachcardDetail() {
 
@@ -13,6 +14,30 @@ export default function EachcardDetail() {
     const [des,setdes] = useState(null);
     const [rain, setrain] = useState(null);
     const [snow, setsnow] = useState(null);
+
+    const { bookedIds, toggleBooking } = useContext(BookingContext);
+    const isBooked = bookedIds.includes(card.id);
+
+
+//FEEDBACK FORM STATES
+
+  const [showForm, setShowForm] = useState(false);
+  const [rating, setRating] = useState(0);
+  const [feedback, setFeedback] = useState("");
+
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    const data = {tourId: card.id,
+                rating,
+                feedback,};
+    console.log(data);
+    alert("Feedback Submitted ❤️");
+    // reset
+    setRating(0);
+    setFeedback("");
+    setShowForm(false);
+  };
+
 
     useEffect(()=> {
         const fetchWeather= async()=> {
@@ -30,20 +55,20 @@ export default function EachcardDetail() {
     return (
         <div>
             <img src={card.image} className="block mx-auto w-[60vw] h-120"></img>
-            <div className="bg-[#dcfce7] flex flex-wrap px-[10%] py-4 mx-40 my-3 rounded-xl justify-between">
+            <div className="terms-box">
                 <p>🔒 Fast and Secure Payments</p>
                 <p>🏷️ Best Price Guarantee</p>
                 <p>↪️ 24 hrs Cancellation Policy</p>
                 <p>🕵 Professional Guide</p>
             </div>
-            <div className="mx-42 my-10">
-                <h2 className="font-bold text-3xl mb-4">All About this Service : </h2>
+            <div className="each-container">
+                <h2 className="font-bold text-3xl mb-4 terms2">All About this Service : </h2>
                 <div className="flex gap-5">
                 <p className="bg-[#eaf9ef] px-4 rounded-lg text-md text-green-950">Best Seller!</p>
                 <p className="bg-[#eaf9ef] px-4 rounded-lg text-md text-green-950">Iconic Views!!</p>
                 </div>
             </div>
-            <div className="mx-42">
+            <div className="each-container-2">
                 <h2 className="font-bold mb-4 text-xl">Tour Description:</h2>
                 <h3 className="singlecardHead">1️⃣ Overview</h3>
                 <div className="singlecardDes">
@@ -84,7 +109,21 @@ export default function EachcardDetail() {
                     {rain !== null ? (<h3 className="font-semibold text-xl mt-2">5. Rain: {rain}°C</h3>) : (<h3 className="font-semibold text-xl mt-2"></h3>)}
                     {snow !== null ? (<h3 className="font-semibold text-xl mt-2">6. Snow: {snow}°C</h3>) : (<h3 className="font-semibold text-xl mt-2"></h3>)}
                 </div>
-                    <button className="bg-green-900 text-white mt-6 h-22 px-5 text-xl rounded-xl cursor-pointer w-[15%]"><h2>Book This trip</h2><p>｡ﾟ☁︎｡✈︎⋆｡</p> </button>
+                    <button className="book-btn buttonclick bg-green-900 text-white mt-6 h-22 px-5 text-xl rounded-xl cursor-pointer w-[15%]" onClick={() => {toggleBooking(card.id); if (!isBooked) {setShowForm(true);}}}>{isBooked ? "Cancel Booking" : "Book This trip☁︎✈︎⋆"}</button>
+                    {showForm && (
+                    <div className="fixed inset-0 flex justify-center items-center">
+                    <div className="bg-white p-4 rounded-lg w-80 relative">
+                    <button onClick={() => setShowForm(false)} className="absolute top-2 right-2">❌</button>   
+                    <h3 className="text-center mb-3">Give Feedback</h3>
+                    <form onSubmit={handleSubmit}>
+                    <div className="flex justify-center mb-3">
+                        {[1,2,3,4,5].map((star) => (<span key={star} onClick={() => setRating(star)} className={`text-2xl cursor-pointer ${star <= rating ? "text-yellow-400" : "text-gray-300"}`}>★</span>))}
+                    </div>
+                    <textarea placeholder="Your experience..." className="w-full border p-2 mb-3" value={feedback} onChange={(e) => setFeedback(e.target.value)} required/>
+                    <button className="buttonclick w-full bg-blue-500 text-white py-2 rounded">Submit</button>
+                    </form>
+                    </div>
+                    </div>)}
             </div>
 
         </div>

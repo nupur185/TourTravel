@@ -1,4 +1,4 @@
-import { createContext, useState, useEffect, use } from "react";
+import { createContext, useState, useEffect } from "react";
 import tourdata from "../Utils/tourdata";
 
 const SeasonToursContext = createContext();
@@ -6,7 +6,7 @@ const SeasonToursContext = createContext();
 export function ToursProvider({children}) {
 
     const types = [
-    "cultural","adventure","wildlife","scenic","historical",
+    "Religious","adventure","wildlife","scenic","historical",
     "architecture","ghost","food"];
     const indianCities = [
     "Delhi","Mumbai","Jaipur","Goa","Varanasi","Agra","Udaipur","Kolkata",
@@ -26,15 +26,18 @@ export function ToursProvider({children}) {
 
     useEffect(()=> {
         const fetchWeather= async()=> {
-            const summer=[];
-            const winter=[];
-            const spring=[];
+            try{
+                const summer=[];
+                const winter=[];
+                const spring=[];
 
             for(let city of allCities) {
+                console.log(city);
+                const cityTours = tourdata.filter(tour => tour.city === city);
                 const res= await fetch(`https://api.openweathermap.org/data/2.5/find?q=${city}&appid=5796abbde9106b7da4febfae8c44c232&units=metric`);
                 const data= await res.json();
                 const temp = data.list[0].main.temp;
-                const cityTours = tourdata.filter(tour => tour.city === city);
+                console.log(temp);
                 if (temp > 20) {summer.push(...cityTours);} 
                 else if (temp < 0) {winter.push(...cityTours);} 
                 else {spring.push(...cityTours);}
@@ -43,13 +46,18 @@ export function ToursProvider({children}) {
             setSummertours(summer);
             setWintertours(winter);
             setSpringTours(spring);
+            }
+            catch(error){
+                console.log("cannot fetch data");
+            }
+            
         };
         fetchWeather();
     }, [tourdata]);
 
      return (
-        <SeasonToursContext.Provider value={{ summertours, wintertours, springTours, outsideindia, insideindia, allCities, types }}>
-            {children}      {/* seasontourscontext jaha v use krenge unke children ko ye sara provider wala value mil jayega, isliye children liye h, taki jinko data chahiye, wo children me chal jayenge */}
+        <SeasonToursContext.Provider value={{ summertours, wintertours, springTours, outsideindia, insideindia, allCities, types, indianCities, internationalCities }}>
+            {children}     
         </SeasonToursContext.Provider>
     )
 

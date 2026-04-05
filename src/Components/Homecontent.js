@@ -4,6 +4,7 @@ import HomeRating from "./HomeRating"
 import HomeAbroad from "./HomeAbroad"
 import HomeWinter from "./HomeWinter"
 import HomeSummer from "./HomeSummer"
+import HomeStrip1 from "./HomeStrip1"
 import HomeStrip2 from "./HomeStrip2"
 import { useEffect, useState } from "react"
 
@@ -25,7 +26,7 @@ export default function Homecontent() {
         <HomeActivities tourdata={tourdata}/>
         <HomeRating tourdata={tourdata}/>
         <HomeAbroad outsideindia={outsideindia}/>
-        <img src="https://images.troll.is/v1/troll/aIEhsFGsbswqTL4j_2025banner.png?auto=format%2Ccompress&width=2048" className="w-[82vw] flex justify-center mx-[8%] my-[5%]"></img>
+        <HomeStrip1 />
         <HomeWinter/>
         <HomeSummer/>
         <HomeStrip2/>

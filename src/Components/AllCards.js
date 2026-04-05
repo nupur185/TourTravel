@@ -25,13 +25,8 @@ export default function AllCards() {
     const internationalCities = [...new Set(outsideindia.map(t => t.city))];
 
     const handleSort = (type) => {
-        setSortType(type);
-        if(type === "none"){setDisplayData(originalData); return;}
-        let sorted = [...displayData];
-        if(type === "price"){sorted.sort((a,b)=>a.price-b.price);}
-        if(type === "rating"){sorted.sort((a,b)=>b.ratings-a.ratings);}
-        if(type === "travelhours"){sorted.sort((a,b)=>a.hours-b.hours);}
-        setDisplayData(sorted);}
+    setSortType(type);
+};
 
     const handleFilter = (category,value)=>{
         setFilters(prev=>{
@@ -46,21 +41,24 @@ export default function AllCards() {
 
     useEffect(() => {
         let filtered = [...originalData];
-        // REGION
         if(filters.region.length > 0){filtered = filtered.filter(tour => filters.region.includes(tour.city));}
-        // TYPE
         if(filters.type.length > 0){filtered = filtered.filter(tour => filters.type.includes(tour.type));}
-        // SEASON
         if(filters.season.length > 0){
             let seasonData = [];
-            if(filters.season.includes("summer")){seasonData = [...seasonData, ...summertours];}
+             if(filters.season.includes("summer")){seasonData = [...seasonData, ...summertours];}
             if(filters.season.includes("winter")){seasonData = [...seasonData, ...wintertours];}
             if(filters.season.includes("spring")){seasonData = [...seasonData, ...springTours];}
             filtered = filtered.filter(tour => seasonData.some(s => s.id === tour.id));}
-        // BUDGET
         filtered = filtered.filter(tour => tour.price >= minBudget && tour.price <= maxBudget); 
+        if (sortType === "price") {
+        filtered.sort((a, b) => a.price - b.price);
+        } else if (sortType === "rating") {
+            filtered.sort((a, b) => b.ratings - a.ratings);
+        } else if (sortType === "travelhours") {
+            filtered.sort((a, b) => b.hours - a.hours);
+        }
         setDisplayData(filtered);
-    },[filters,minBudget,maxBudget]);
+    },[filters,minBudget,maxBudget,sortType]);
 
 
 const clearFilters = () => {
@@ -80,10 +78,6 @@ const clearFilters = () => {
 
     return (
         <div>
-            <div className="mx-auto text-center">
-                <h1 className="font-extrabold text-4xl">Here are All Our Tours Services.</h1>
-                <h2 className="font-bold text-xl">Filter and Sort According to your Requirements.</h2>
-            </div>
             <div className="flex">
                 <div className="allcardsleft">
                     <h2 className="font-semibold mb-4 border-b-2 cursor-pointer" onClick={()=>setShowSort(!showSort)}>SORT BY <span>{showSort ? "▼" : "▲"}</span></h2>
@@ -139,21 +133,26 @@ const clearFilters = () => {
                                         </div>
                         )}  
 
-                        <button onClick={clearFilters} className="cursor-pointer mt-3 bg-red-600 text-white font-bold p-1 rounded-md">Clear All Filters</button>
+                        <button onClick={clearFilters} className="buttonclick cursor-pointer mt-3 bg-red-600 text-white font-bold p-1 rounded-md">Clear All Filters</button>
 
                       </div>
                     )}
 
                 </div>
-                <div className="flex-1 p-4 pt-12 mx-30">   
+                <div className="flex-1 p-4 pt-12 mx-30 allcardsright">   
                     <div>
+                        <div className="mx-auto text-center">
+                <h1 className="font-extrabold text-4xl">Here are All Our Tours Services.</h1>
+                <h2 className="font-bold text-xl">Filter and Sort According to your Requirements.</h2> <br/> <hr></hr>
+            </div>
                         <p className="text-xl font-semibold">Explore all regions and tours - Tried & Trusted all Itineraries.</p>
                     </div>
+                    {displayData.length > 0 ? (
                     <div className="flex flex-wrap gap-6 mt-6">
                         {displayData.map((tour) => (
                         <Link to={"/detail/"+tour.id} key={tour.id} className="homeratinglink">
-                        <div className="homerating w-75 bg-white">
-                            <img src={tour.image} className="h-48 w-full rounded-t-2xl"/>
+                        <div className="buttonclick homerating w-75 bg-white">
+                            <img src={tour.image} className="card-effect h-48 w-full rounded-t-2xl"/>
                             <h2 className="homeratingcontent py-2 text-[#146e13] font-bold text-lg">{tour.description}</h2>
                             <h4 className="homeratingcontent">{stars}<span className="ml-2 homeratingtext">{tour.ratings + ".0"}</span></h4>
                             <p className="homeratingcontent"><img src="https://troll.is/assets/svg/location.svg"></img><span className="homeratingtext">{tour.city}</span></p>
@@ -165,6 +164,13 @@ const clearFilters = () => {
                         </Link>
                         ))}
                     </div>
+                    ) : (
+                <div>
+                <p>No tours available of selected choices</p>
+                <p>Don't Worry, </p>
+                <p>We have many tours available for you. Just Explore once again.</p>
+                </div>
+            )}
                 </div>
             </div>
         </div>

@@ -4,23 +4,23 @@
 }
 
 .nav-item:hover {
-  color: #1d4ed8; /* blue-600 */
+  color: #1d4ed8; 
 }
 
-/* Dropdown */
+
 .dropdown {
-  position: relative; /* This is equivalent to Tailwind 'relative' */
+  position: relative; 
 }
 
 .dropdown-menu {
-  position: absolute; /* equivalent to Tailwind 'absolute' */
-  top: 100%; /* right below parent */
+  position: absolute; 
+  top: 100%; 
   left: 0;
   background-color: white;
   border: 1px solid #ddd;
   border-radius: 0.25rem;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  display: none; /* hidden by default */
+  display: none; 
   min-width: 150px;
   z-index: 100;
 }
@@ -36,5 +36,5 @@
 }
 
 .dropdown-item:hover {
-  background-color: #e0f2fe; /* light blue */
+  background-color: #e0f2fe; 
 }

@@ -1,13 +1,13 @@
 .allcardsleft {
-    width: 280px;           /* w-70 ≈ 17.5rem ≈ 280px */
-  background-color: white; /* bg-white */
-  border-right: 1px solid #e5e7eb; /* border-r */
-  padding: 1rem;          /* p-4 */
-  padding-top: 6rem;      /* pt-24 */
-  overflow-y: auto;       /* overflow-y-auto */
-  height: 100vh;          /* h-screen */
-  position: sticky;       /* sticky */
-  top: 0;                 /* top-0 */
+    width: 280px;           
+  background-color: white;
+  border-right: 1px solid #e5e7eb; 
+  padding: 1rem;          
+  padding-top: 6rem;
+  overflow-y: auto;       
+  height: 100vh;       
+  position: sticky;  
+  top: 0;           
   margin-top: -70px;
 }
 
@@ -49,4 +49,19 @@ appearance:none;
 display:flex;
 justify-content:space-between;
 font-size:12px;
+}
+
+@media (max-width:685px) {
+  .allcardsright {
+    display: flex;
+    flex-wrap: wrap;
+    flex: 1 1 200px;
+    margin-left: 0;
+    margin-right: 0;  
+  }
+  .allcardsleft {
+    min-width: 40%;
+    margin-left: 0;
+    margin-right: 0;
+  }
 }
